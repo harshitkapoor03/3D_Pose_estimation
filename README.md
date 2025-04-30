@@ -1,65 +1,88 @@
-# 3D Pose Estimation
+# 3D Pose Estimation for Sports Analysis
 
-This project focuses on person re-identification (ReID), a crucial task in computer vision where a person must be recognized across different frames and camera viewpoints. The goal is to extract a feature vector from a bounding box to ensure reliable matching.
+This project implements a computer vision system for tracking and identifying players in sports footage using 3D pose estimation and person re-identification (ReID). I developed this to explore how we can automatically analyze player movements and positions in team sports like basketball or soccer.
 
-## 📌 Features
-- **Feature Extraction**: Generates feature vectors from person images.
-- **Multi-frame Matching**: Matches individuals across different frames.
-- **Deep Learning-based**: Utilizes deep learning models for improved accuracy.
+## How It Works
 
-<!--## 📂 Project Structure-->
-<!--```plaintext-->
-<!--/final.ipynb        # Main Jupyter Notebook-->
-<!--/data               # Dataset directory (if applicable)-->
-<!--/models             # Pre-trained or trained models-->
-<!--/outputs            # Results and evaluation outputs-->
-<!--```-->
-### 🔹 Pose Estimation
-1. **YOLO Model** for effective pose estimation and tracking.
-2. Extracting keypoints and bounding boxes.
-### 🔹 ReID Approach
-1. **Bounding Box Detection**: A person is detected using an object detection model like **YOLO**.
-2. **Feature Extraction**: A deep learning model (FastReID) extracts a **feature vector** that represents the person uniquely.
-3. **Metric Learning**: The extracted feature vectors are compared using a **distance metric** (e.g., cosine similarity, Euclidean distance).
-4. **Re-Identification**: The system matches individuals across different frames based on similarity scores.
-5. Maintaining a database to effectively store feature vectors and identity of unique people.
+The system combines several computer vision techniques:
 
-### 🔹 Triangulation Approach
-1. Using projection matrics, extrinsic and intrinsic properties of camera to triangulate and get corresponding 3D points.
-2. Using these 3D points to create skeleton of player.
-3. We used weighted moving averages to smoothen out 3D pose estimation throughout the frames.
-4. Re-verifying the ids assigned by ReID model to further validate the estimation.
+1. **Player Detection & Pose Estimation**  
+   - Uses YOLO to detect players and estimate their 2D poses  
+   - Extracts keypoints (joints) and bounding boxes  
 
-<!--## 🔧 Technologies Used-->
-<!--### 📌 Deep Learning & Machine Learning-->
+2. **Person Re-Identification**  
+   - Generates unique feature vectors for each player using FastReID  
+   - Tracks players across frames using similarity matching  
 
-## 🚀 Installation & Usage
-### 1️⃣ Clone the Repository
-```sh
+3. **3D Reconstruction**  
+   - Triangulates 3D positions from multiple camera views  
+   - Applies smoothing to stabilize the 3D skeleton  
+   - Validates identities using the ReID features  
+
+## Key Features
+
+- Multi-camera 3D pose estimation
+- Player identification across different views
+- Temporal smoothing for stable tracking
+- Modular pipeline for sports analytics
+
+## Technical Approach
+
+### Pose Estimation
+- YOLO-based detection for real-time performance
+- Keypoint extraction for body pose analysis
+
+### ReID System
+1. Bounding box detection (YOLO)
+2. Feature vector extraction (FastReID) 
+3. Similarity matching (cosine/Euclidean distance)
+4. Identity database management
+
+### 3D Reconstruction
+- Camera calibration (intrinsic/extrinsic params)
+- Multi-view triangulation
+- Weighted moving averages for smoothing
+- ReID verification for consistency
+
+## Getting Started
+
+### Prerequisites
+- Python 3.6+
+- PyTorch
+- OpenCV
+- YOLOv5 or similar detection model
+
+### Installation
+```bash
 git clone https://github.com/harshitkapoor03/3D_Pose_estimation.git
 cd 3D_Pose_estimation
 ```
-<!--### 2️⃣ Install Dependencies-->
-<!--```sh-->
-<!--pip install -r requirements.txt-->
-<!--```-->
-### 2️⃣ Run the Notebook
-Open and execute `final.ipynb` using Jupyter Notebook or Jupyter Lab.
 
-<!--## 📊 Results-->
-<!--- Evaluation metrics such as Rank-1 accuracy and mAP.-->
-<!--- Visualization of re-identification matches.-->
+### Usage
+Run the main notebook:
+```bash
+jupyter notebook final.ipynb
+```
 
-## 🔍 Future Work
-- Improving similarity and loss functions to effectively differentiate between persons.
-- Enhancing robustness in occlusions and varied lighting.
-- Improving ReID by using 3D field modelling.
-- Applying threading and other parallel processing technuiques to achieve almost real time detection and re-identification.
+## Why This Matters
 
-## 📜 License
-This project is licensed under the MIT License.
+This technology can help:
+- Automate sports analytics
+- Provide real-time player tracking
+- Enable new coaching tools
+- Generate advanced statistics
 
-<!------->
+## Current Limitations
 
-<!--👤 **Author**: [Your Name]  -->
-<!--📧 Contact: your.email@example.com  -->
+- Requires calibrated multi-camera setup
+- Challenging in crowded player situations
+- Depends on good detection quality
+
+## Future Improvements
+
+I'm working on:
+- Better ReID models for sports uniforms
+- Real-time optimization
+- 3D court/field modeling
+- Team-specific analytics
+
